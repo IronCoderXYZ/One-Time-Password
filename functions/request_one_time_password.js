@@ -7,7 +7,7 @@ module.exports = function(req, res) {
       .send({ error: 'You must provide a phone number, please try again'});
   }
 
-  const phone = String(req.body.phone).replace(/[^\d]/g);
+  const phone = String(req.body.phone).replace(/[^\d]/g, '');
 
   admin.auth().getUser(phone)
     .then(user => {
@@ -21,7 +21,7 @@ module.exports = function(req, res) {
         if (err) { return res.status(422).send(err); }
 
         admin.database().ref('users/' + phone)
-          .update({ code: code }, () => {
+          .update({ code: code, codeValid: true }, () => {
             res.send({ sucess: true });
           });
       })

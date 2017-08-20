@@ -7,7 +7,7 @@ module.exports = function(req, res) {
   }
 
   // Format the p# to remove non digits
-  const phone = String(req.body.phone).replace(/[^\d]/g, "");
+  const phone = String(req.body.phone).replace(/[^\d]/g, '');
 
   // Create a new user account w #
   admin.auth().createUser({ uid: phone })
