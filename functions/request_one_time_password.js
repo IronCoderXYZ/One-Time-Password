@@ -17,7 +17,14 @@ module.exports = function(req, res) {
         body: 'Your code is ' + code,
         to: phone,
         from: '+17082953247'
-      });
+      }, (err) => {
+        if (err) { return res.status(422).send(err); }
+
+        admin.database().ref('users/' + phone)
+          .update({ code: code }, () => {
+            res.send({ sucess: true });
+          });
+      })
 
     })
     .catch((err) => {
